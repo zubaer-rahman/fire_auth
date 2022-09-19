@@ -43,6 +43,21 @@ function App() {
        setUser(signedOutUser)
     });
   }
+  const handleSubmit = () => {
+
+  }
+  const handleBlur = (event) => {
+     let isFormValid = true;
+     event.target.name === "email"? isFormValid = /\S+@\S+\.\S+/.test(event.target.value) :  
+     event.target.name === "password"? isFormValid = /(?=.*[0-9])/.test(event.target.value) :
+                                       isFormValid = true;
+
+    if  (isFormValid) {
+      const newUserInfo = {...user};
+      newUserInfo[event.target.name] = event.target.value;
+      setUser(newUserInfo);
+    }                                     
+  }
 
   return (
     <div className='App'>
@@ -56,6 +71,20 @@ function App() {
         <img src={user.img} alt="not found" />
       </div>
       }
+
+      <h1> Our Own Authentication </h1>
+      <p> name: {user.name} </p>
+      <p> email: {user.email} </p>
+      <p> password: {user.password} </p>
+      <form onSubmit={handleSubmit}>
+        <input type="text" onBlur={handleBlur} name='name' placeholder='your name' />
+        <br />
+        <input type="email" onBlur={handleBlur} name='email' placeholder='email' required />
+        <br />
+        <input type="password" onBlur={handleBlur} name='password' placeholder='password' required />
+        <br />
+        <input type="submit" value="Submit" />
+      </form>
     </div>
   );
 }
